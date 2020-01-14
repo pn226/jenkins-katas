@@ -29,11 +29,16 @@ pipeline {
             unstash 'code'
             sh 'ci/build-app.sh'
             archiveArtifacts '*'
+            sh 'echo "$DOCKERCREDS_PSW" | docker login -u "$DOCKERCREDS_USR" --password-stdin'
+            sh 'ci/push-docker.sh'
           }
         }
 
       }
     }
 
+  }
+  environment {
+    DOCKERCREDS = credentials('docker_login')
   }
 }
