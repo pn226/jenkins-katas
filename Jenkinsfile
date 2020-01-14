@@ -3,7 +3,6 @@ pipeline {
   stages {
     stage('Clone Down') {
       steps {
-        unstash 'clone'
         stash(excludes: '.git', name: 'code')
       }
     }
@@ -27,6 +26,7 @@ pipeline {
             skipDefaultCheckout(true)
           }
           steps {
+            unstash 'code'
             sh 'ci/build-app.sh'
             archiveArtifacts '*'
           }
