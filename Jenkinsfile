@@ -32,7 +32,7 @@ pipeline {
 
       }
       steps {
-        archiveArtifacts 'app/build/libs/'
+        archiveArtifacts '*'
       }
     }
 
