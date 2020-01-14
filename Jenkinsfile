@@ -3,6 +3,7 @@ pipeline {
   stages {
     stage('Clone Down') {
       steps {
+        unstash 'clone'
         stash(excludes: '.git', name: 'code')
       }
     }
@@ -21,6 +22,9 @@ pipeline {
               image 'gradle:jdk11'
             }
 
+          }
+          options {
+            skipDefaultCheckout(true)
           }
           steps {
             sh 'ci/build-app.sh'
